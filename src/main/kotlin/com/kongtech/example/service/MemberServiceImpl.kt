@@ -1,14 +1,21 @@
 package com.kongtech.example.service
 
 import com.kongtech.example.model.response.MemberResponse
+import com.kongtech.example.repository.MemberRepository
 import org.springframework.stereotype.Service
 
 @Service
-class MemberServiceImpl : MemberService {
+class MemberServiceImpl(
+    private val memberRepository: MemberRepository
+) : MemberService {
     override fun getMembers(): MutableList<MemberResponse> {
-        return mutableListOf<MemberResponse>(
-            MemberResponse(1, "wjy", "용인시 마북로 (16911)"),
-            MemberResponse(2, "kyj", "용인시 용구대로 (15432)")
-        )
+        val members = memberRepository.findAll()
+        val responses = mutableListOf<MemberResponse>()
+        for (member in members) {
+            responses.add(
+                MemberResponse.of(member.id, member.name, member.address?.fullAddress())
+            )
+        }
+        return responses
     }
 }
