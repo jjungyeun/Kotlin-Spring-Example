@@ -1,0 +1,23 @@
+server:
+  port: 8188
+  tomcat:
+    uri-encoding: UTF-8
+  servlet:
+    encoding:
+      enabled: true
+      force-response: true
+      charset: UTF-8
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+  datasource:
+    url: jdbc:postgresql://localhost:5432/testdb?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      username: testuser
+      password: testuser!
+      maximum-pool-size: 10
+      minimum-idle: 10
