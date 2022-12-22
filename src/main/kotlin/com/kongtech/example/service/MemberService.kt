@@ -5,5 +5,6 @@ import com.kongtech.example.model.response.MemberResponse
 
 interface MemberService {
     fun getMembers(): MutableList<MemberResponse>
+    fun getMemberById(memberId: Long): MemberResponse
     fun addMember(memberCreateRequest: MemberCreateRequest)
 }

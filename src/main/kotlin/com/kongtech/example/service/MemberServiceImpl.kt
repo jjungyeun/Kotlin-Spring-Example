@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional
 class MemberServiceImpl(
     private val memberRepository: MemberRepository
 ) : MemberService {
+
     override fun getMembers(): MutableList<MemberResponse> {
         val members = memberRepository.findAll()
         val responses = mutableListOf<MemberResponse>()
@@ -22,6 +23,12 @@ class MemberServiceImpl(
             )
         }
         return responses
+    }
+
+    override fun getMemberById(memberId: Long): MemberResponse {
+        val member = memberRepository.findById(memberId)
+            .orElseThrow()
+        return MemberResponse.of(memberId, member.name, member.address?.fullAddress())
     }
 
     @Transactional
