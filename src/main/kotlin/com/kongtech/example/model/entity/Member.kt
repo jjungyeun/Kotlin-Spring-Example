@@ -1,24 +1,25 @@
 package com.kongtech.example.model.entity
 
-import javax.persistence.Embedded
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import javax.persistence.*
 
 @Entity
+@Table(name = "member2")
 class Member(
     var name: String,
     @Embedded
     var address: Address?
 ) {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Int? = null
+    @Id @GeneratedValue
+    var id: Long? = null
 
     companion object {
         fun of(name: String, city: String?, street: String?, zipcode: String?): Member {
             return Member(name = name, address = Address(city, street, zipcode))
+        }
+
+        fun of(name: String, address: Address?): Member{
+            return Member(name = name, address = address)
         }
     }
 }

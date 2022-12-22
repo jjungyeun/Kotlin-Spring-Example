@@ -4,13 +4,13 @@ import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 class MemberResponse(
-    var id: Int,
+    var id: Long,
     var name: String,
     var address: String? = ""
 ) {
 
     companion object {
-        fun of(memberId: Int?, name: String?, address: String?): MemberResponse {
+        fun of(memberId: Long?, name: String?, address: String?): MemberResponse {
             return MemberResponse(memberId!!, name!!, address)
         }
     }
