@@ -17,12 +17,12 @@ class Delivery private constructor(
 
 
     companion object {
-        fun of(status: DeliveryStatus, city: String?, street: String?, zipcode: String?): Delivery {
-            return Delivery(status = status, address = Address(city, street, zipcode))
+        fun of(city: String?, street: String?, zipcode: String?): Delivery {
+            return Delivery(status = DeliveryStatus.READY, address = Address.of(city, street, zipcode))
         }
 
-        fun of(status: DeliveryStatus, address: Address): Delivery{
-            return Delivery(status = status, address = address)
+        fun of(address: Address): Delivery{
+            return Delivery(status = DeliveryStatus.READY, address = address)
         }
     }
 }
