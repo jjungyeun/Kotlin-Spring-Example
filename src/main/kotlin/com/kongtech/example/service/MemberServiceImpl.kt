@@ -1,10 +1,12 @@
 package com.kongtech.example.service
 
+import com.kongtech.example.exception.MemberNotFoundException
 import com.kongtech.example.model.entity.Address
 import com.kongtech.example.model.entity.Member
 import com.kongtech.example.model.request.MemberCreateRequest
 import com.kongtech.example.model.response.MemberResponse
 import com.kongtech.example.repository.MemberRepository
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -26,8 +28,8 @@ class MemberServiceImpl(
     }
 
     override fun getMemberById(memberId: Long): MemberResponse {
-        val member = memberRepository.findById(memberId)
-            .orElseThrow()
+        val member = memberRepository.findByIdOrNull(memberId)
+            ?: throw MemberNotFoundException()
         return MemberResponse.of(memberId, member.name, member.address?.fullAddress())
     }
 
@@ -35,7 +37,7 @@ class MemberServiceImpl(
     override fun addMember(memberCreateRequest: MemberCreateRequest) {
         val member = Member.of(
             memberCreateRequest.name,
-            Address(memberCreateRequest.city, memberCreateRequest.street, memberCreateRequest.zipcode)
+            Address.of(memberCreateRequest.city, memberCreateRequest.street, memberCreateRequest.zipcode)
         )
         memberRepository.save(member)
     }

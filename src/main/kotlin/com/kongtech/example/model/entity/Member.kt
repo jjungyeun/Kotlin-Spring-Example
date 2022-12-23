@@ -15,7 +15,7 @@ class Member private constructor(
 
     companion object {
         fun of(name: String, city: String?, street: String?, zipcode: String?): Member {
-            return Member(name = name, address = Address(city, street, zipcode))
+            return Member(name = name, address = Address.of(city, street, zipcode))
         }
 
         fun of(name: String, address: Address?): Member{
