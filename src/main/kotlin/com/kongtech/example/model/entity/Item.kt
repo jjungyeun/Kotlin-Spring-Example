@@ -1,5 +1,6 @@
 package com.kongtech.example.model.entity
 
+import com.kongtech.example.exception.NotEnoughItemStockException
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.Id
@@ -21,5 +22,10 @@ class Item private constructor(
         fun of(name: String, price: Int, stockQuantity: Int): Item {
             return Item(name, price, stockQuantity)
         }
+    }
+
+    fun reduceStockQuantity(orderCount: Int) {
+        if (this.stockQuantity < orderCount) throw NotEnoughItemStockException()
+        this.stockQuantity -= orderCount
     }
 }
