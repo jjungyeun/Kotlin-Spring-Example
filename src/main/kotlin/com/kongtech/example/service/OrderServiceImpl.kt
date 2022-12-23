@@ -3,8 +3,10 @@ package com.kongtech.example.service
 import com.kongtech.example.exception.ItemNotFoundException
 import com.kongtech.example.exception.MemberNotFoundException
 import com.kongtech.example.exception.NoDeliveryAddressException
+import com.kongtech.example.exception.NoOrderItemException
 import com.kongtech.example.model.entity.*
 import com.kongtech.example.model.request.OrderCreateRequest
+import com.kongtech.example.model.response.OrderResponse
 import com.kongtech.example.repository.*
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -43,5 +45,25 @@ class OrderServiceImpl(
 
         orderItemRepository.save(OrderItem.of(order, item, item.price, orderCreateRequest.itemCount))
         item.reduceStockQuantity(orderCreateRequest.itemCount)
+    }
+
+    override fun getOrders(): MutableList<OrderResponse> {
+        val orders = orderRepository.findAll()
+        val responses: MutableList<OrderResponse> = mutableListOf()
+        for (order in orders) {
+            val orderItem = orderItemRepository.findByOrderId(order.id!!)
+                ?: throw NoOrderItemException()
+
+            val delivery = order.delivery
+            val deliveryAddress = delivery.address.fullAddress()
+
+            responses.add(
+                OrderResponse.of(
+                    order.member.name, deliveryAddress, delivery.status,
+                    orderItem.item.name, orderItem.count, orderItem.orderPrice, order.status
+                )
+            )
+        }
+        return responses
     }
 }

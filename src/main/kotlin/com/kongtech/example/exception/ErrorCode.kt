@@ -9,8 +9,11 @@ enum class ErrorCode(
     ITEM_NOT_FOUND(400, "해당 아이템이 존재하지 않습니다."),
 
     NO_DELIVERY_ADDRESS(400, "배송 주소가 존재하지 않습니다."),
-    NOT_ENOUGH_ITEM_STOCK(400, "주문하려는 항목의 재고가 부족합니다.")
+    NOT_ENOUGH_ITEM_STOCK(400, "주문하려는 항목의 재고가 부족합니다."),
 
+
+    // ------ Server Problem ------
+    NO_ORDER_ITEM(500, "주문한 아이템에 대한 정보를 불러올 수 없습니다."),
 
 
     ;

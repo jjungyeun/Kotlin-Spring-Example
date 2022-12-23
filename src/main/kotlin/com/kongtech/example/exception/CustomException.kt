@@ -7,5 +7,10 @@ open class CustomException(
 
 class MemberNotFoundException : CustomException(ErrorCode.MEMBER_NOT_FOUND)
 class ItemNotFoundException : CustomException(ErrorCode.ITEM_NOT_FOUND)
+
+
 class NoDeliveryAddressException : CustomException(ErrorCode.NO_DELIVERY_ADDRESS)
 class NotEnoughItemStockException : CustomException(ErrorCode.NOT_ENOUGH_ITEM_STOCK)
+
+
+class NoOrderItemException : CustomException(ErrorCode.NO_ORDER_ITEM)
